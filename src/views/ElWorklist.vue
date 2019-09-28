@@ -78,14 +78,17 @@
 </template>
 
 <script>
+    import user_model from "@/models/user_model";
+
     export default {
         name: "ElWorklist",
         data() {
-            const item = {
-                date: '2016-05-02',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles'
-            };
+            // const item = {
+            //     date: '2016-05-02',
+            //     name: 'Tom',
+            //     address: 'No. 189, Grove St, Los Angeles'
+            // };
+            const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
                 tableData: Array(20).fill(item)
             }
