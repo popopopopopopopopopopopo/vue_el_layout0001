@@ -73,6 +73,13 @@
                     </el-table-column>
                 </el-table>
             </el-main>
+            <el-footer>
+                <el-button
+                        type="primary"
+                        @click="openFullScreen">
+                    Load Data
+                </el-button>
+            </el-footer>
         </el-container>
     </el-container>
 </template>
@@ -90,8 +97,28 @@
             // };
             const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
-                tableData: Array(20).fill(item)
+                tableData: Array(20).fill(item),
+                fullscreenLoading: false,
             }
+        },
+        methods : {
+            openFullScreen() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                setTimeout(() => {
+                    loading.close();
+                }, 2000);
+            }
+            // openFullScreen() {
+            //     this.fullscreenLoading = true;
+            //     setTimeout(() => {
+            //         this.fullscreenLoading = false;
+            //     }, 2000);
+            // }
         }
     };
 </script>
