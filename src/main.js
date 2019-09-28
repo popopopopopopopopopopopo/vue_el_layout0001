@@ -2,11 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// ElementUI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.config.productionTip = false
+// ElementUIでの言語設定、datePickerとかで適用される
+import locale from 'element-ui/lib/locale/lang/ja'
+
+Vue.use(ElementUI, {locale});
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
