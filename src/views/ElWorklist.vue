@@ -64,7 +64,11 @@
             </el-header>
 
             <el-main>
-                <el-table :data="tableData">
+                <el-table
+                        ref="singleTable"
+                        :data="tableData"
+                        highlight-current-row
+                        @current-change="handleCurrentDataChange">
                     <el-table-column prop="date" label="Date" width="140">
                     </el-table-column>
                     <el-table-column prop="name" label="Name" width="120">
@@ -109,15 +113,26 @@
             // const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
                 // tableData: Array(20).fill(item),
+                currentData: null,
                 tableData: Array(0),
                 fullscreenLoading: false,
             }
         },
         methods : {
+            handleCurrentDataChange(val) {
+                this.currentData = val;
+            },
             load_data() {
                 this.start_loading();
-                const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
-                this.tableData = Array(20).fill(item);
+                let arr = Array(0);
+                let myNew = () => {
+                    return new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
+                };
+                arr.push(new myNew());
+                arr.push(new myNew());
+                arr.push(new myNew());
+                //const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
+                this.tableData = arr;
                 this.end_loading();
                 this.notify("データ更新", "更新が完了しました。", 3000);
             },
