@@ -76,12 +76,18 @@
                     <el-table-column prop="address" label="Address">
                     </el-table-column>
                 </el-table>
+                <edit-drawer :name="currentData.name" :date="currentData.date" :address="currentData.address"></edit-drawer>
             </el-main>
             <el-footer>
                 <el-button
                         type="primary"
                         @click="load_data">
                     Load Data
+                </el-button>
+                <el-button
+                        type="secondary"
+                        @click="open_edit">
+                    Edit Data
                 </el-button>
                 <el-button
                         type="secondary"
@@ -100,6 +106,7 @@
 
 <script>
     import user_model from "@/models/user_model";
+    import EditDrawer from "./EditDrawer";
     let loadingSubScriber = null;
 
     export default {
@@ -113,12 +120,15 @@
             // const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
                 // tableData: Array(20).fill(item),
-                currentData: null,
+                currentData: new user_model("","",""),
                 tableData: Array(0),
                 fullscreenLoading: false,
             }
         },
         methods : {
+            open_edit() {
+                this.$store.dispatch("drawersetting/draw", true);
+            },
             handleCurrentDataChange(val) {
                 this.currentData = val;
             },
@@ -178,6 +188,9 @@
             //         this.fullscreenLoading = false;
             //     }, 2000);
             // }
+        },
+        components : {
+            EditDrawer
         }
     };
 </script>
