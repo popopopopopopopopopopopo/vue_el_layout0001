@@ -76,8 +76,18 @@
             <el-footer>
                 <el-button
                         type="primary"
-                        @click="openFullScreen">
+                        @click="load_data">
                     Load Data
+                </el-button>
+                <el-button
+                        type="secondary"
+                        @click="clear_data">
+                    Clear Data
+                </el-button>
+                <el-button
+                        type="secondary"
+                        @click="loadWithTimeoutFullScreen">
+                    Set full screen loading
                 </el-button>
             </el-footer>
         </el-container>
@@ -86,6 +96,7 @@
 
 <script>
     import user_model from "@/models/user_model";
+    let loadingSubScriber = null;
 
     export default {
         name: "ElWorklist",
@@ -95,14 +106,26 @@
             //     name: 'Tom',
             //     address: 'No. 189, Grove St, Los Angeles'
             // };
-            const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
+            // const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
-                tableData: Array(20).fill(item),
+                // tableData: Array(20).fill(item),
+                tableData: Array(0),
                 fullscreenLoading: false,
             }
         },
         methods : {
-            openFullScreen() {
+            load_data() {
+                this.start_loading();
+                const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
+                this.tableData = Array(20).fill(item);
+                this.end_loading();
+            },
+            clear_data() {
+                this.start_loading();
+                this.tableData = Array(0);
+                this.end_loading();
+            },
+            loadWithTimeoutFullScreen() {
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
@@ -112,6 +135,17 @@
                 setTimeout(() => {
                     loading.close();
                 }, 2000);
+            },
+            start_loading() {
+                loadingSubScriber = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+            },
+            end_loading() {
+                if (loadingSubScriber) loadingSubScriber.close();
             }
             // openFullScreen() {
             //     this.fullscreenLoading = true;
