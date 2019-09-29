@@ -119,11 +119,21 @@
                 const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
                 this.tableData = Array(20).fill(item);
                 this.end_loading();
+                this.notify("データ更新", "更新が完了しました。", 3000);
             },
             clear_data() {
                 this.start_loading();
                 this.tableData = Array(0);
                 this.end_loading();
+                this.notify("データ更新", "クリアしました。", 3000);
+            },
+            notify(title, message, duration) {
+                //Notification
+                this.$notify({
+                    title: title,
+                    message: message,
+                    duration: duration,
+                });
             },
             loadWithTimeoutFullScreen() {
                 const loading = this.$loading({
