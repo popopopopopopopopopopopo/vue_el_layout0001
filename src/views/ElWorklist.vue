@@ -76,7 +76,7 @@
                     <el-table-column prop="address" label="Address">
                     </el-table-column>
                 </el-table>
-                <edit-drawer :name="currentData.name" :date="currentData.date" :address="currentData.address"></edit-drawer>
+                <edit-drawer></edit-drawer>
             </el-main>
             <el-footer>
                 <el-button
@@ -120,6 +120,8 @@
         },
         methods : {
             open_edit() {
+                //alert(this.$store.state.current_user.currentuser.name);
+                this.$store.dispatch("current_user/setuser", this.currentData);
                 this.$store.dispatch("drawersetting/draw", true);
             },
             handleCurrentDataChange(val) {

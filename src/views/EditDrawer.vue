@@ -32,36 +32,32 @@
 </template>
 
 <script>
+    import { mapState, mapMutations } from 'vuex';
     export default {
         name : "edit-drawer",
-        props : {
-            name : "",
-            date : "",
-            address : "",
-        },
         computed : {
             localname: {
                 get() {
-                    return this.name
+                    return this.$store.state.current_user.currentuser.name;
                 },
                 set(val) {
-                    this.$emit("update:name", val);
+                    this.$store.dispatch("current_user/setname", val);
                 }
             },
             localdate: {
                 get() {
-                    return this.date
+                    return this.$store.state.current_user.currentuser.date;
                 },
                 set(val) {
-                    this.$emit("update:date", val);
+                    this.$store.dispatch("current_user/setdate", val);
                 }
             },
             localaddress: {
                 get() {
-                    return this.address
+                    return this.$store.state.current_user.currentuser.address;
                 },
                 set(val) {
-                    this.$emit("update:address", val);
+                    this.$store.dispatch("current_user/setaddress", val);
                 }
             },
             localdrawer: {
@@ -80,11 +76,12 @@
         },
         methods: {
             save(){
+                this.$store.dispatch("current_user/setuser", false);
                 this.$store.dispatch("drawersetting/draw", false);
             },
             cancel() {
                 this.$store.dispatch("drawersetting/draw", false);
-            }
+            },
         }
     };
 </script>
