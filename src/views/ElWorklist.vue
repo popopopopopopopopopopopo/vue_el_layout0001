@@ -1,5 +1,5 @@
 <template>
-    <el-container style="height: 500px; border: 1px solid #eee">
+    <el-container style="height: 900px; border: 1px solid #eee">
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
             <el-menu :default-openeds="['1', '3']">
                 <el-submenu index="1">
@@ -112,14 +112,7 @@
     export default {
         name: "ElWorklist",
         data() {
-            // const item = {
-            //     date: '2016-05-02',
-            //     name: 'Tom',
-            //     address: 'No. 189, Grove St, Los Angeles'
-            // };
-            // const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
             return {
-                // tableData: Array(20).fill(item),
                 currentData: new user_model("","",""),
                 tableData: Array(0),
                 fullscreenLoading: false,
@@ -134,15 +127,14 @@
             },
             load_data() {
                 this.start_loading();
-                let arr = Array(0);
+                this.tableData.length = 0;
                 let myNew = () => {
                     return new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
                 };
-                arr.push(new myNew());
-                arr.push(new myNew());
-                arr.push(new myNew());
+                this.tableData.push(new myNew());
+                this.tableData.push(new myNew());
+                this.tableData.push(new myNew());
                 //const item = new user_model('Tom', '2016-05-02', 'No. 189, Grove St, Los Angeles');
-                this.tableData = arr;
                 this.end_loading();
                 this.notify("データ更新", "更新が完了しました。", 3000);
             },
