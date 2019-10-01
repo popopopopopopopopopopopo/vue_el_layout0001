@@ -77,6 +77,7 @@
                     </el-table-column>
                 </el-table>
                 <edit-drawer></edit-drawer>
+                <edit-confirm :title="confirmParams.title" :message="confirmParams.message"></edit-confirm>
             </el-main>
             <el-footer>
                 <el-button
@@ -99,6 +100,11 @@
                         @click="loadWithTimeoutFullScreen">
                     Set full screen loading
                 </el-button>
+                <el-button
+                        type="secondary"
+                        @click="open_confirm">
+                    confirm
+                </el-button>
             </el-footer>
         </el-container>
     </el-container>
@@ -107,6 +113,7 @@
 <script>
     import user_model from "@/models/user_model";
     import EditDrawer from "./EditDrawer";
+    import EditConfirm from "./EditConfirm";
     let loadingSubScriber = null;
 
     export default {
@@ -116,6 +123,10 @@
                 currentData: new user_model("","",""),
                 tableData: Array(0),
                 fullscreenLoading: false,
+                confirmParams: {
+                    title: "",
+                    message: "",
+                }
             }
         },
         methods : {
@@ -175,16 +186,17 @@
             },
             end_loading() {
                 if (loadingSubScriber) loadingSubScriber.close();
-            }
-            // openFullScreen() {
-            //     this.fullscreenLoading = true;
-            //     setTimeout(() => {
-            //         this.fullscreenLoading = false;
-            //     }, 2000);
-            // }
+            },
+            open_confirm() {
+                this.confirmParams.title = "hoge";
+                this.confirmParams.message = "moge";
+
+                this.$store.dispatch("confirmsetting/setvisible", true);
+            },
         },
         components : {
-            EditDrawer
+            EditDrawer,
+            EditConfirm,
         }
     };
 </script>
